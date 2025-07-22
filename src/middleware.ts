@@ -8,17 +8,25 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
     
     const token = await getToken({ req: request });
-    const url = request.nextUrl
+    const url = request.nextUrl;
 
-    if(token &&(
-        url.pathname.startsWith("/sign-in")
-        || url.pathname.startsWith("/sign-up")
-        || url.pathname.startsWith("/verify")
-        || url.pathname.startsWith("/")
-    )){
+    // If authenticated and trying to access auth pages, redirect to dashboard
+    if (token && (
+        url.pathname.startsWith("/sign-in") ||
+        url.pathname.startsWith("/sign-up") ||
+        url.pathname.startsWith("/verify") ||
+        url.pathname === "/"
+    )) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
     }
-    return NextResponse.redirect(new URL("/home", request.url));
+
+    // If unauthenticated and trying to access dashboard, redirect to home
+    if (!token && url.pathname.startsWith("/dashboard")) {
+        return NextResponse.redirect(new URL("/home", request.url));
+    }
+
+    // Otherwise, allow the request
+    return NextResponse.next();
 }
 
 // See "Matching Paths" below to learn more
