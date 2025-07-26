@@ -17,11 +17,12 @@ export async function GET(request: Request) {
     );
   }
   const userId = new mongoose.Types.ObjectId(user._id);
+  console.log(userId);
 
   //Todo: learn aggreagation pipelline test on atlast aggreagation
   try {
     const user = await UserModel.aggregate([
-      { $match: { id: userId } },
+      { $match: { _id: userId } },
       { $unwind: "$messages" },
       { $sort: { "messages.createdAt": -1 } },
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
@@ -34,7 +35,7 @@ export async function GET(request: Request) {
           message: "User not found",
         },
         {
-          status: 401,
+          status: 404,
         }
       );
     }

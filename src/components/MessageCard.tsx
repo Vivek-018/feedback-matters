@@ -64,8 +64,8 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-        <CardDescription>Card Description</CardDescription>
-        <CardAction>Card Action</CardAction>
+        <CardDescription>{message.content}</CardDescription>
+        <CardAction>{new Date(message.createdAt).toLocaleString()}</CardAction>
       </CardHeader>
       <CardContent></CardContent>
       {/* <CardFooter></CardFooter> */}

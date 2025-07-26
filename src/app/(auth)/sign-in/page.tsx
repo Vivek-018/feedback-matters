@@ -110,7 +110,7 @@ const SignIn = () => {
           <p>
             Don't have an account?
             <Link href="/sign-up" className="text-blue-500 hover:underline">
-              Sign In
+              Sign Up
             </Link>
           </p>
         </div>
