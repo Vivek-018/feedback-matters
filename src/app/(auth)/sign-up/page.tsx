@@ -85,7 +85,7 @@ const page = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center p-15">
       <div>
         <div>
           <h1 className="text-2xl font-bold mb-4"> Feedback-Matters</h1>
@@ -112,7 +112,7 @@ const page = () => {
                   <p
                     className={`text-sm ${usernameMessage === "Username is unique" ? "text-green-500" : "text-red-500"}`}
                   >
-                    test {usernameMessage}
+                    {usernameMessage}
                   </p>
 
                   <FormMessage />

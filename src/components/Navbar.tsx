@@ -89,7 +89,7 @@ const Navbar = () => {
                 <Button
                   onClick={() => signOut()}
                   variant="outline"
-                  className="border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-slate-700 transition-all duration-200 flex items-center gap-2"
+                  className="border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-slate-700 transition-all duration-200 flex items-center gap-2 cursor-pointer"
                 >
                   <LogOut className="h-4 w-4" />
                   <span className="hidden sm:inline">Logout</span>
@@ -97,7 +97,7 @@ const Navbar = () => {
               </>
             ) : (
               <Link href="/sign-in">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 flex items-center gap-2 shadow-sm">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 flex items-center gap-2 shadow-sm cursor-pointer">
                   <LogIn className="h-4 w-4" />
                   Login
                 </Button>

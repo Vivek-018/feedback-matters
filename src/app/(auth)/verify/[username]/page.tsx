@@ -32,7 +32,7 @@ const VerifyAccount = () => {
         code: data.code,
       });
       toast.success("Account verified successfully");
-      router.push("/sign-in");
+      router.push("/dashboard");
     } catch (error) {
       console.error("Error in sign-up of user:", error);
       const axiosError = error as AxiosError<ApiResponse>;
