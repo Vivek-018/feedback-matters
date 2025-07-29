@@ -159,6 +159,7 @@
 // };
 
 // export default page;
+
 "use client";
 import MessageCard from "@/components/MessageCard";
 import { Button } from "@/components/ui/button";
@@ -205,7 +206,7 @@ const page = () => {
     setIsLoading(true);
     try {
       const response = await axios.get<ApiResponse>("/api/accept-messages");
-      setValue("acceptMessages", response.data.isAcceptingMessage as boolean);
+      setValue("acceptMessages", response.data.isAcceptingMessages as boolean);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.error(axiosError.response?.data.message);
@@ -223,7 +224,7 @@ const page = () => {
         const response = await axios.get<ApiResponse>("/api/get-messages");
         setMessages(response.data.messages || []);
         if (refresh) {
-          toast.success(response.data.message);
+          toast.success(response.data.message || "Messages Refreshed");
         }
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
@@ -381,9 +382,9 @@ const page = () => {
 
           {/* Right Column - Messages */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200">
-              {/* Messages Header */}
-              <div className="p-6 border-b border-slate-200">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 h-[calc(100vh-200px)] flex flex-col">
+              {/* Messages Header - Fixed */}
+              <div className="p-6 border-b border-slate-200 bg-white rounded-t-xl flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xl font-semibold text-slate-800">
@@ -413,32 +414,45 @@ const page = () => {
                 </div>
               </div>
 
-              {/* Messages Content */}
-              <div className="p-6">
+              {/* Messages Content - Scrollable */}
+              <div className="flex-1 overflow-hidden">
                 {messages.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="h-full overflow-y-auto p-6 space-y-4 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 hover:scrollbar-thumb-slate-400">
                     {messages.map((message, index) => (
-                      <MessageCard
+                      <div
                         key={message._id ? String(message._id) : index}
-                        message={message}
-                        onMessageDelete={handleDeleteMessage}
-                      />
+                        className="transform transition-all duration-200 hover:scale-[1.02]"
+                      >
+                        <MessageCard
+                          message={message}
+                          onMessageDelete={handleDeleteMessage}
+                        />
+                      </div>
                     ))}
+                    {/* Bottom padding for better scroll experience */}
+                    <div className="h-4"></div>
                   </div>
                 ) : (
-                  <div className="text-center py-12">
-                    <MessageSquare className="mx-auto h-16 w-16 text-slate-300 mb-4" />
-                    <h3 className="text-lg font-medium text-slate-800 mb-2">
-                      No feedback yet
-                    </h3>
-                    <p className="text-slate-600 mb-6 max-w-md mx-auto">
-                      Share your link to start collecting anonymous feedback
-                      from your audience. Messages will appear here once people
-                      start responding.
-                    </p>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm">
-                      💡 Tip: Make sure "Accept New Messages" is turned on to
-                      receive feedback
+                  <div className="h-full flex items-center justify-center p-6">
+                    <div className="text-center max-w-md">
+                      <div className="p-4 bg-slate-50 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <MessageSquare className="h-10 w-10 text-slate-300" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-slate-800 mb-3">
+                        No feedback yet
+                      </h3>
+                      <p className="text-slate-600 mb-6 leading-relaxed">
+                        Share your link to start collecting anonymous feedback
+                        from your audience. Messages will appear here once
+                        people start responding.
+                      </p>
+                      <div className="inline-flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 rounded-lg text-sm border border-blue-200">
+                        <span className="text-lg">💡</span>
+                        <span className="font-medium">
+                          Tip: Make sure "Accept New Messages" is turned on to
+                          receive feedback
+                        </span>
+                      </div>
                     </div>
                   </div>
                 )}

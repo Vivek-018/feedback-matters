@@ -3,7 +3,6 @@ import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
-import { success } from "zod/v4";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -17,12 +16,12 @@ export async function POST(request: Request) {
     );
   }
   const userId = user._id;
-  const { acceptMesssages } = await request.json();
+  const { acceptMessages } = await request.json();
 
   try {
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      { isAcceptingMessage: acceptMesssages },
+      { isAcceptingMessage: acceptMessages },
       { new: true }
     );
 
