@@ -37,6 +37,7 @@ export async function GET(request: Request) {
         {
           success: false,
           message: "Invalid query parameters",
+          errors: usernameErrors,
         },
         { status: 400 }
       );

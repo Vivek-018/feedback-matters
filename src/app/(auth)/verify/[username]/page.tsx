@@ -27,7 +27,8 @@ const VerifyAccount = () => {
 
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     try {
-      const response = await axios.post(`/api/verify-code`, {
+      // const response =
+       await axios.post(`/api/verify-code`, {
         username: param.username,
         code: data.code,
       });
@@ -36,7 +37,7 @@ const VerifyAccount = () => {
     } catch (error) {
       console.error("Error in sign-up of user:", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage =
+      const errorMessage =
         axiosError.response?.data.message ??
         "An error occurred during verification.";
       toast.error(errorMessage);

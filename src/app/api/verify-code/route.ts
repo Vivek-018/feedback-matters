@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           message: "validation error: code or username",
+          errors: codeErrors,
         },
         { status: 400 }
       );

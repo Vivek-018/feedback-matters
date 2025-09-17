@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import z from "zod";
 
-const page = () => {
+const Page = () => {
   const [isSending, setIsSending] = useState(false);
   const params = useParams();
   const username = params.username as string;
@@ -222,4 +222,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

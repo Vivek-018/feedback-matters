@@ -1,4 +1,4 @@
-import { streamText, generateText } from "ai";
+import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 
 const geminiModel = google("gemini-1.5-pro-latest");
