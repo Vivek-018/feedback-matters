@@ -184,7 +184,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const page = () => {
+const Page = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
@@ -247,7 +247,7 @@ const page = () => {
   const handleSwitchChange = async () => {
     try {
       const response = await axios.post("/api/accept-messages", {
-        acceptMesssages: !acceptMessages,
+        acceptMessages: !acceptMessages,
       });
 
       setValue("acceptMessages", !acceptMessages);
@@ -449,8 +449,7 @@ const page = () => {
                       <div className="inline-flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 rounded-lg text-sm border border-blue-200">
                         <span className="text-lg">💡</span>
                         <span className="font-medium">
-                          Tip: Make sure "Accept New Messages" is turned on to
-                          receive feedback
+                        <p>Tip: Make sure &quot;Accept New Messages&quot; is turned on...</p>
                         </span>
                       </div>
                     </div>
@@ -465,4 +464,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
