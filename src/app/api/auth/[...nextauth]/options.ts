@@ -20,15 +20,49 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: Record<string, string> | undefined): Promise<any> {
+        // if (!credentials) return null;
+
+        // await dbConnect();
+        // try {
+        //   const user = await UserModel.findOne({
+        //     $or: [
+        //       { email: credentials.identifier },
+        //       { username: credentials.identifier },
+        //     ],
+        //   });
+
+        //   if (!user) {
+        //     throw new Error("No user found with this email");
+        //   }
+
+        //   if (!user.isVerified) {
+        //     throw new Error("Please verify your account before login");
+        //   }
+
+        //   const isPasswordCorrect = await bcrypt.compare(
+        //     credentials.password,
+        //     user.password
+        //   );
+
+        //   if (isPasswordCorrect) {
+        //     return user;
+        //   } else {
+        //     throw new Error("Incorrect password");
+        //   }
+        // } catch (error) {
+        //    if (error instanceof Error) {
+        //     throw new Error(error.message);
+        //   }
+        //   throw new Error("Internal server error");
+        // }
         if (!credentials) return null;
 
         await dbConnect();
         try {
+          const { identifier, password } = credentials as Credentials;
+
           const user = await UserModel.findOne({
-            $or: [
-              { email: credentials.identifier },
-              { username: credentials.identifier },
-            ],
+            $or: [{ email: identifier }, { username: identifier }],
           });
 
           if (!user) {
@@ -39,10 +73,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Please verify your account before login");
           }
 
-          const isPasswordCorrect = await bcrypt.compare(
-            credentials.password,
-            user.password
-          );
+          const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
           if (isPasswordCorrect) {
             return user;
@@ -50,7 +81,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Incorrect password");
           }
         } catch (error) {
-           if (error instanceof Error) {
+          if (error instanceof Error) {
             throw new Error(error.message);
           }
           throw new Error("Internal server error");
