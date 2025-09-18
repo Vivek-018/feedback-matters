@@ -287,6 +287,7 @@ const Page = () => {
       await navigator.clipboard.writeText(profileUrl);
       toast.success("Copied to clipboard");
     } catch (error) {
+      console.error("Failed to copy to clipboard:", error);
       toast.error("Failed to copy to clipboard");
     }
   };

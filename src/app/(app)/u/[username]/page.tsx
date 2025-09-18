@@ -52,7 +52,7 @@ const Page = () => {
     } catch (error) {
       console.error("Error in sending message:", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage =
+      const errorMessage =
         axiosError.response?.data.message ??
         "An error occurred while sending message";
       toast.error(errorMessage);
@@ -71,7 +71,7 @@ const Page = () => {
     } catch (error) {
       console.error("Error in getting suggestions:", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage =
+      const errorMessage =
         axiosError.response?.data.message ??
         "An error occurred while getting suggestions";
       toast.error(errorMessage);
@@ -213,7 +213,7 @@ const Page = () => {
             messages === "" && (
               <div className="text-center py-8 text-gray-500">
                 <Sparkles className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                <p>Click "Generate AI Suggestions" to get message ideas</p>
+                <p>Click Generate AI Suggestions to get message ideas</p>
               </div>
             )}
         </CardContent>
