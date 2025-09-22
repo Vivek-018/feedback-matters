@@ -17,6 +17,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.5",
     "@react-email/components": "0.2.0",
+    "@typegoose/typegoose": "^12.19.0",
     "ai": "^4.3.19",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.2",
