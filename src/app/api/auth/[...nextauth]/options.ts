@@ -9,7 +9,6 @@
 //   password: string;
 // };
 
-
 // export const authOptions: NextAuthOptions = {
 //   providers: [
 //     CredentialsProvider({
@@ -120,8 +119,7 @@
 //   secret: process.env.NEXTAUTH_SECRET,
 // };
 
-
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
@@ -177,13 +175,35 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  // callbacks: {
+  //   async jwt({ token, user }) {
+  //     if (user) {
+  //       token._id = (user as any).id;
+  //       token.isVerified = (user as any).isVerified;
+  //       token.isAcceptingMessages = (user as any).isAcceptingMessages;
+  //       token.username = (user as any).username;
+  //     }
+  //     return token;
+  //   },
+  //   async session({ session, token }) {
+  //     if (token) {
+  //       session.user._id = token._id as string;
+  //       session.user.isVerified = token.isVerified as boolean;
+  //       session.user.isAcceptingMessages =
+  //         token.isAcceptingMessages as boolean;
+  //       session.user.username = token.username as string;
+  //     }
+  //     return session;
+  //   },
+  // },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = (user as any).id;
-        token.isVerified = (user as any).isVerified;
-        token.isAcceptingMessages = (user as any).isAcceptingMessages;
-        token.username = (user as any).username;
+        const u = user as import("next-auth").User; // 👈 typed user
+        token._id = u.id;
+        token.isVerified = u.isVerified;
+        token.isAcceptingMessages = u.isAcceptingMessages;
+        token.username = u.username;
       }
       return token;
     },
@@ -191,8 +211,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user._id = token._id as string;
         session.user.isVerified = token.isVerified as boolean;
-        session.user.isAcceptingMessages =
-          token.isAcceptingMessages as boolean;
+        session.user.isAcceptingMessages = token.isAcceptingMessages as boolean;
         session.user.username = token.username as string;
       }
       return session;
